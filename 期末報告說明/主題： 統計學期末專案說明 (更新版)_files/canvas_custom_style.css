@@ -1,0 +1,194 @@
+/* hide outcomes course navigation */
+.ic-app-course-menu a.outcomes, #nav_edit_tab_id_15 {
+  display: none;
+}
+
+/* hide myNTU Port course navigation */
+.ic-app-course-menu a.context_external_tool_101, #nav_edit_tab_id_context_external_tool_101 {
+  display: none;
+}
+
+/* hide announcement external feed button at announcement list page */
+.announcements-v2__wrapper button#external_feed {
+  display: none;
+}
+
+/* hide public index option at course settings */
+table.coursesettings .public_options {
+  display: none;
+}
+
+/* hide profile page add email link */
+table.channel_list .add_email_link {
+  display: none;
+}
+
+/* hide profile other contacts block */
+table.other_channels {
+  display: none;
+}
+
+/* hide profile registered web services */
+.registered_web_services_header, .registered_web_services_content {
+  display: none;
+}
+
+/* hide profile approved integration */
+.approved_integration_headers, .approved_integration_content {
+  display: none;
+}
+
+/* hide course setting buttons that should not be used by faculties */
+a.Button--course-settings.un_conclude_course, a.Button--course-settings.conclude_course, a.Button--course-settings.delete_course, a.Button--course-settings.copy_course_link, a.Button--course-settings.import_content, a.Button--course-settings.export_content, a.Button--course-settings.reset_course_content_button {
+  display: none;
+}
+
+/* hide unused course setting tabs */
+#course_details_tabs #feature_flags_tab {
+  display: none;
+}
+
+/* hide discussion podcast options */
+#discussion-details-tab .podcast_enabled {
+  display: none;
+}
+
+/* hide module item resource selection links for LTIs that is not configured as resource selection */
+#context_external_tools_select li.tool {
+  display: none !important;
+}
+
+#context_external_tools_select li.tool.resource_selection {
+  display: list-item !important;
+
+}
+
+/* hide wizard import content link */
+.ic-wizard-box__nav-checklist #wizard_content_import {
+  display: none;
+}
+
+/* hide instructure branding */
+#update_profile_form .user_subscribe_to_emails {
+  display: none;
+}
+
+/* hide start a new course button */
+#right-side #start_new_course, button#start_new_course {
+  display: none;
+}
+
+/* hide build course button at global navigation */
+#context_external_tool_138_menu_item {
+  display: none;
+}
+
+/* hide edit section button */
+#right-side .button-sidebar-wide.edit_section_link {
+  display: none;
+}
+
+/* hide add section form */
+form#add_section_form {
+  display: none;
+}
+
+/* login page style */
+body.ic-Login-Body #footer.ic-Login-footer {
+  display: none !important;
+}
+
+.ic-Login__container
+{
+	margin:0px;
+	width: 100%;  
+  
+  	justify-content: center;
+  	align-items: center;
+	
+  	padding: 8% 0;
+}
+
+.ic-Login__content
+{
+	
+	font-family : Microsoft JhengHei UI;
+	width: 320px;
+	min-width: 320px;
+	margin: 0 auto;
+	
+	background: #fff;
+	border-radius: 10px;
+	border:0px 0px;
+	overflow: visible;
+	padding: 70px 10px 10px 10px;
+
+	box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+	-o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+	-ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+	
+}
+
+.ic-Login__innerContent
+{
+	padding:0px;
+	border:0px;
+	border-radius:0px;
+}
+
+.ic-Login-header
+{
+	padding:0 49px;
+	max-width: 224px;
+	max-height: 170px;
+	display:table-cell; 
+	vertical-align:middle; 
+	text-align:center;
+}
+
+.ic-Login__body
+{
+	padding:28px 40px 12px 40px;
+	margin-top:12px
+}
+
+.ic-Label
+{
+	font-weight:bold;
+	font-size:16px;
+}
+
+.Button--login{
+	font-family : Microsoft JhengHei UI;
+	display: block;
+	border-radius: 8px !important;
+	padding: 10px 25px !important;
+    border: none !important;
+    
+	text-align: center;
+    text-decoration: none;
+	
+	background-color: #07AAD6 !important;
+    color: white !important;
+
+	overflow:visible
+}
+
+.Button--login:hover {
+    background-color: #E55648 !important; 
+	text-decoration: none;
+	color: white !important;
+}
+
+
+.ic-Login__actions .Button--login:hover::after{}
+
+
+.ic-Login__forgot{
+	font-size:14px;
+}
+.ic-Login__forgot:hover{
+	font-weight:bold
+}

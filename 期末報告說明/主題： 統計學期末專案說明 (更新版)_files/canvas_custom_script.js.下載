@@ -1,0 +1,262 @@
+// start of google analytics code
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+$(function() {
+  setup_google_analytics();
+
+  function setup_google_analytics() {
+    var sUserId
+    var sUserRole
+    var sTemp // Course ID from URL
+    var _course
+    var sCourseName = null
+    var parent_account //Give you the subaccount_id that the course is in
+
+////////////////// CHANGE UA # HERE /////////////////////
+    ga('create', 'UA-108871821-4', 'auto');
+
+    //Get User Information
+    sUserId = ENV["current_user_id"];
+    ga('set', 'dimension1', sUserId);
+
+    //Get User Role
+    if ($.inArray('admin', ENV['current_user_roles']) == -1 && $.inArray('teacher', ENV['current_user_roles']) == -1 && $.inArray('student', ENV['current_user_roles']) > -1) {
+      sUserRole = "student";
+    } else if ($.inArray('admin', ENV['current_user_roles']) == -1 && $.inArray('teacher', ENV['current_user_roles']) > -1) {
+      sUserRole = "teacher";
+    } else if ($.inArray('admin', ENV['current_user_roles']) > -1) {
+      sUserRole = "admin";
+    } else {
+      sUserRole = "other";
+    }
+
+    ga('set', 'dimension3', sUserRole);
+
+    //If the user is in a course
+    try {
+      sTemp = window.location.pathname.match(/\/courses\/(\d+)/);
+      if (sTemp[1]) {
+
+          //Get Course information - Course Name and parent sub-account id
+          var d1 = $.get('/api/v1/courses/' + sTemp[1], function (_course) {
+              parent_account = _course.account_id
+              parent_account = parent_account.toString();
+              sCourseName = _course.name
+          });
+
+          $.when(d1).done(function (_account) {
+              // ...do stuff...
+              ga('set', 'dimension4', sTemp[1]);
+              ga('set', 'dimension5', sCourseName);
+              ga('set', 'dimension6', parent_account);
+              ga('send', 'pageview');
+          });
+      } else {
+          ga('send', 'pageview');
+      }
+    } catch (err) {}
+  };
+});
+// end of google analytics code
+
+// show hidden UI components for admin role
+$(function() {
+  if (isAdmin()) {
+    if (atCourseSettingsPage()) {
+      showHiddenCourseSettingButtons();
+      showHiddenCourseSettingTabs();
+      showCourseNavigationOutcomesEditButton();
+      showCourseNavigationMyNTUPortEditButton();
+      showHiddenCourseDetailsSettingOptions();
+      showAddSectionForm();
+    }
+	
+    if (atCoursesPage()) {
+      showCourseNavigationOutcomesButton();	
+      showCourseNavigationMyNTUPortButton();
+    }
+
+    if (atSectionPage()) {
+      showEditSectionButton();
+    }
+	
+    if (atProfileSettingsPage()) {
+      showProfileRegisteredWebServicesBlock();
+      showProfileApprovedIntegrationsBlock();
+      showProfileAddEmailLink();
+      showProfileOtherContactsBlock();
+    }
+	
+    if (atCourseAnnouncementsPage()) {
+      showCourseAnnouncementsExternalFeedsButton();
+      showAnnouncementsSectionTooltips();
+    }
+	
+    if (atCreateDiscussionPage() || atEditDiscussionPage()) {
+      showDiscussionEnablePodcastOption();
+    }
+  }
+
+  if (isAdmin() || isStaff()) {
+    showBuildCourseButton();
+  }
+
+  if (atDashboardPage()) {
+    showContactOnFooter();
+  }
+  
+  // function definitions
+  function showHiddenCourseSettingTabs() {
+    $('#course_details_tabs #feature_flags_tab').css("display", "list-item");
+    $('#course_details_tabs #sections_tab').css("display", "list-item");
+  }
+
+  function showHiddenCourseSettingButtons() {
+    $('a.Button--course-settings.un_conclude_course').css("display", "block");
+    $('a.Button--course-settings.conclude_course').css("display", "block");
+    $('a.Button--course-settings.delete_course').css("display", "block");
+    $('a.Button--course-settings.copy_course_link').css("display", "block");
+    $('a.Button--course-settings.import_content').css("display", "block");
+    $('a.Button--course-settings.export_content').css("display", "block");
+    $('a.Button--course-settings.reset_course_content_button').css("display", "block");
+  }
+  
+  function showHiddenCourseDetailsSettingOptions() {
+    $('table.coursesettings .public_options').css("display", "block");
+  }
+  
+  function showProfileRegisteredWebServicesBlock() {
+    $('.registered_web_services_header').css("display", "block");
+    $('.registered_web_services_content').css("display", "block");
+  }
+  
+  function showProfileApprovedIntegrationsBlock() {
+    $('.approved_integration_headers').css("display", "block");
+    $('.approved_integration_content').css("display", "block");
+  }
+  
+  function showProfileAddEmailLink() {
+    $('table.channel_list .add_email_link').css("display", "table-row");
+  }
+  
+  function showProfileOtherContactsBlock() {
+    $('table.other_channels').css("display", "table");
+  }
+  
+  function showCourseNavigationOutcomesEditButton() {
+    $("#nav_edit_tab_id_15").css("display", "block");
+  }
+  
+  function showCourseNavigationMyNTUPortEditButton() {
+    $("#nav_edit_tab_id_context_external_tool_101").css("display", "block");
+  }
+  
+  function showCourseNavigationOutcomesButton() {
+    $(".ic-app-course-menu a.outcomes").css("display", "block");
+  }
+  
+  function showCourseNavigationMyNTUPortButton() {
+    $(".ic-app-course-menu a.context_external_tool_101").css("display", "block");
+  }
+  
+  function showCourseAnnouncementsExternalFeedsButton() {
+    $('.announcements-v2__wrapper button#external_feed').css("display", "inline-flex");
+  }
+  
+  function showDiscussionEnablePodcastOption() {
+    $('#discussion-details-tab .podcast_enabled').css("display", "block"); 
+  }
+  
+  function showAnnouncementsSectionTooltips(attempts) {
+    let sectionTooltips = $('.announcements-v2__wrapper .ic-section-tooltip');
+    attempts = ++attempts || 1;
+    if (sectionTooltips.length) {
+      sectionTooltips.each(function(index) {
+        $(this).css("display", "inline");
+      });
+      return
+    }
+    if (attempts == 60) return;
+    setTimeout(function() {
+      NTUCOOL_showAnnouncementsSectionTooltips(attempts);
+    }, 250);
+  }
+  
+  function showBuildCourseButton() {
+    $("#context_external_tool_138_menu_item").css("display", "list-item");
+  }
+
+  function showEditSectionButton() {
+    $("#right-side .button-sidebar-wide.edit_section_link").css("display", "block");
+  }
+
+  function showAddSectionForm() {
+    $("form#add_section_form").css("display", "block");
+  }
+
+  function showContactOnFooter() {
+    $("<p>Contact: ntucool@ntu.edu.tw / (02)3366-3367 #598 #580, (02)3366-4888 #9601 #9602</p>").insertBefore("#footer-links");
+  }
+
+  function atDashboardPage() {
+    return location.pathname.match(/^\/$/);
+  } 
+
+  function atCoursesPage() {
+    return location.pathname.match(/\/courses\/\d+/);
+  }
+  
+  function atCourseSettingsPage() {
+    return location.pathname.match(/\/courses\/\d+\/settings/);
+  }
+  
+  function atProfileSettingsPage() {
+    return location.pathname.match(/\/profile\/settings/);
+  }
+  
+  function atCourseAnnouncementsPage() {
+    return location.pathname.match(/\/courses\/\d+\/announcements/);
+  }
+  
+  function atCreateDiscussionPage() {
+    return location.pathname.match(/\/courses\/\d+\/discussion_topics\/new/);
+  }
+  
+  function atEditDiscussionPage() {
+    return location.pathname.match(/\/courses\/\d+\/discussion_topics\/\d+\/edit/);
+  }
+
+  function atSectionPage() {
+    return location.pathname.match(/\/courses\/\d+\/sections\/\d+/);
+  }
+  
+  function isAdmin() {
+    if (ENV.current_user_roles) {
+      return ENV.current_user_roles.includes('admin', 'root_admin');
+    } else {
+      return false;
+    }
+  }
+
+  function isStaff() {
+    if (ENV.current_user.sis_user_id) {
+      return !ENV.current_user.sis_user_id.match(/^$|^[a-zA-z0-9]{9}/);
+    } else {
+      return false;
+    }
+  }
+})
+
+$("audio").each(function(index) {
+  $(this).attr("controlslist", "nodownload")
+})
+
+$("video").each(function(index) {
+  $(this).attr("controlslist", "nodownload")
+})
+
+// Open manual to new tab
+$("#context_external_tool_174_menu_item > a").attr("target", "_blank");
